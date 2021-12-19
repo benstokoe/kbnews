@@ -7,7 +7,7 @@ const Comments = ({ comments }: CommentsProps) => {
     <div className="">
       {!comments.length && <p>No comments yet.</p>}
       {comments.map((comment) => (
-        <Comment key={comment.data} comment={comment} />
+        <Comment key={comment.id} comment={comment} />
       ))}
     </div>
   );

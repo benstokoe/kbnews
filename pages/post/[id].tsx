@@ -24,7 +24,8 @@ const Comments = () => {
   const getComments = useCallback(async () => {
     const { data } = await supabase
       .from("comments")
-      .select("inserted_at, data, karma, profiles:author ( id, username )")
+      .select("id, inserted_at, data, karma, profiles:author ( id, username )")
+      .order("inserted_at", { ascending: false })
       .eq("post", query.id);
 
     setComments(data);
@@ -49,12 +50,13 @@ const Comments = () => {
     getComments();
   }, [query.id, getComments]);
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values, { resetForm }) => {
     const { data } = await supabase
       .from("comments")
       .insert({ data: values.comment, author: user.id, post: query.id });
 
     if (data) {
+      resetForm();
       getComments();
     }
   };
