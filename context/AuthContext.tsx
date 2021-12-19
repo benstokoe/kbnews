@@ -1,10 +1,10 @@
-import { User } from "@supabase/supabase-js";
+import { ApiError, Session, User } from "@supabase/supabase-js";
 import React, { useContext, useState, useEffect } from "react";
 import { supabase } from "utils/supabaseClient";
 
 type AuthContext = {
-  signUp?: (data: SignUp) => void;
-  signIn?: (data: SignIn) => void;
+  signUp?: (data: SignUp) => Promise<SignUpReturn>;
+  signIn?: (data: SignIn) => Promise<SignInReturn>;
   signOut?: () => void;
   user?: User;
   profile?: Profile;
@@ -20,8 +20,18 @@ type SignIn = {
   password: string;
 };
 
+type SignInReturn = {
+  error: ApiError | null;
+};
+
 type SignUp = SignIn & {
   username: string;
+};
+
+type SignUpReturn = {
+  user: User | null;
+  session: Session | null;
+  error: ApiError | null;
 };
 
 const AuthContext = React.createContext<AuthContext>({});
@@ -75,8 +85,8 @@ export const AuthProvider = ({ children }) => {
   }
 
   const value = {
-    signUp: (data: SignUp) => supabase.auth.signUp(data),
-    signIn: (data: SignIn) => supabase.auth.signIn(data),
+    signUp: (data: SignUp): Promise<SignUpReturn> => supabase.auth.signUp(data),
+    signIn: (data: SignIn): Promise<SignInReturn> => supabase.auth.signIn(data),
     signOut: () => supabase.auth.signOut(),
     user,
     profile,

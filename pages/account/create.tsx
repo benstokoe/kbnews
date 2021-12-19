@@ -8,7 +8,7 @@ import InputField from "components/form-fields/InputField";
 import { PrimaryButton, SecondaryButton } from "components/Button/Button";
 import PageWidth from "components/PageWidth/PageWidth";
 import { Title } from "components/Title/Title";
-import { supabase } from "utils/supabaseClient";
+// import { supabase } from "utils/supabaseClient";
 
 const validationSchema = object().shape({
   email: string()

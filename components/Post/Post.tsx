@@ -18,7 +18,7 @@ const Post = ({ title, url, ...detail }: PostProps) => {
 };
 
 type PostProps = Post & {
-  isComments: boolean;
+  isComments?: boolean;
 };
 
 export default Post;

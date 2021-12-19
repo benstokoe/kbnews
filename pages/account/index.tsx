@@ -27,16 +27,18 @@ const Account = () => {
       setUserPosts(data);
     };
 
-    const getUserKarma = async () => {
-      const { data } = await supabase.rpc("get-user-karma", {
-        user_id: user.id,
-      });
+    // const getUserKarma = async () => {
+    //   const { data } = await supabase.rpc<number>("get-user-karma", {
+    //     user_id: user.id,
+    //   });
 
-      setUserKarma(data);
-    };
+    //   console.log(data);
+
+    //   setUserKarma(data);
+    // };
 
     getUserPosts();
-    getUserKarma();
+    // getUserKarma();
   }, [user]);
 
   // const updateProfile = async ({ username, website, avatar_url }) => {
