@@ -64,6 +64,10 @@ export const AuthProvider = ({ children }) => {
       setLoading(true);
       const user = supabase.auth.user();
 
+      if (!user) {
+        return;
+      }
+
       const { data, error, status } = await supabase
         .from("profiles")
         .select(`username`)
