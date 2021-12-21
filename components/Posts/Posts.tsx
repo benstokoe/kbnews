@@ -37,7 +37,7 @@ const Posts = () => {
     <PageWidth>
       {posts.map((post, index) => (
         <div key={post.title} className="flex mb-3">
-          <p className="mr-2">{index + 1}</p>
+          <p className="mr-2 text-gray-600 text-sm pt-1">{index + 1}</p>
           <Post {...post} />
         </div>
       ))}

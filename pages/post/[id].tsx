@@ -69,8 +69,7 @@ const Comments = () => {
           <div className="mb-2">
             <Post {...post} isComments />
 
-            <div className="mt-2 w-1/2">
-              <p>Leave comment</p>
+            <div className="mt-2 md:w-1/2">
               <Formik
                 initialValues={{
                   comment: "",
@@ -83,7 +82,7 @@ const Comments = () => {
                     <Field
                       component={InputField}
                       name="comment"
-                      label="Comment"
+                      label="Leave Comment"
                       type="textarea"
                       error={touched.comment && errors.comment}
                     />

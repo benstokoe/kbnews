@@ -17,12 +17,13 @@ const Detail = ({
     )}
     <span className="">
       {karma} points by {username}{" "}
-      {formatDistanceToNow(new Date(inserted_at), { addSuffix: true })}
-    </span>{" "}
-    | report{" "}
+      {formatDistanceToNow(new Date(inserted_at), { addSuffix: true })}&nbsp;
+    </span>
+    | report
     {!isComments && (
       <>
-        | <Link href={`/post/${id}`}>comments</Link>
+        &nbsp;|&nbsp;
+        <Link href={`/post/${id}`}>comments</Link>
       </>
     )}
   </div>
