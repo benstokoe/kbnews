@@ -67,7 +67,7 @@ const Comments = () => {
       {!postLoading && (
         <div>
           <div className="mb-2">
-            <Post {...post} isComments />
+            <Post {...post} hideComments />
 
             <div className="mt-2 md:w-1/2">
               <Formik

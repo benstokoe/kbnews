@@ -29,7 +29,7 @@ const Post = ({ title, url, ...detail }: PostProps) => {
 };
 
 type PostProps = Post & {
-  isComments?: boolean;
+  hideComments?: boolean;
 };
 
 export default Post;

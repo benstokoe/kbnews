@@ -7,12 +7,13 @@ const Detail = ({
   karma,
   profiles: { username },
   inserted_at,
-  isComments,
+  hideUpvote,
+  hideComments,
 }: DetailProps) => (
   <div className="text-sm flex items-center">
-    {!isComments && (
-      <div className="mr-1">
-        <AiOutlineArrowUp />
+    {!hideUpvote && (
+      <div className="mr-1 hover:pointer">
+        <AiOutlineArrowUp className="hover:fill-red" />
       </div>
     )}
     <span className="">
@@ -20,7 +21,7 @@ const Detail = ({
       {formatDistanceToNow(new Date(inserted_at), { addSuffix: true })}&nbsp;
     </span>
     | report
-    {!isComments && (
+    {!hideComments && (
       <>
         &nbsp;|&nbsp;
         <Link href={`/post/${id}`}>comments</Link>
@@ -36,7 +37,8 @@ type DetailProps = {
     username: string;
   };
   inserted_at: string;
-  isComments?: boolean;
+  hideUpvote?: boolean;
+  hideComments?: boolean;
 };
 
 export default Detail;
