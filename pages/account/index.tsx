@@ -1,11 +1,10 @@
 import { SecondaryButton } from "components/Button/Button";
 import PageWidth from "components/PageWidth/PageWidth";
-import { Title } from "components/Title/Title";
 import { useAuth } from "context/AuthContext";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { supabase } from "utils/supabaseClient";
-import Post from "components/Post/Post";
+// import Post from "components/Post/Post";
 
 const Account = () => {
   const { replace } = useRouter();
@@ -27,18 +26,19 @@ const Account = () => {
       setUserPosts(data);
     };
 
-    // const getUserKarma = async () => {
-    //   const { data } = await supabase.rpc<number>("get-user-karma", {
-    //     user_id: user.id,
-    //   });
+    const getUserKarma = async () => {
+      // TODO: fix
+      const { data } = await supabase
+        .rpc<number>("get-user-karma", {
+          user_id: user.id,
+        })
+        .single();
 
-    //   console.log(data);
-
-    //   setUserKarma(data);
-    // };
+      setUserKarma(data);
+    };
 
     getUserPosts();
-    // getUserKarma();
+    getUserKarma();
   }, [user]);
 
   // const updateProfile = async ({ username, website, avatar_url }) => {
@@ -68,6 +68,8 @@ const Account = () => {
 
   if ((!user || !profile) && !loading) {
     replace("/account/login");
+
+    return "";
   }
 
   return (
@@ -81,7 +83,7 @@ const Account = () => {
           <div className="mt-2">
             <p>Karma: {userKarma}</p>
           </div>
-          {userPosts && (
+          {/* {userPosts && (
             <div className="my-3">
               <strong>Posts ({userPosts.length})</strong>
 
@@ -89,7 +91,7 @@ const Account = () => {
                 <Post key={post.title} {...post} />
               ))}
             </div>
-          )}
+          )} */}
 
           <div>
             <SecondaryButton handleClick={signOut}>Sign Out</SecondaryButton>

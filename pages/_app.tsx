@@ -5,6 +5,7 @@ import AppContainer from "../containers/AppContainer";
 
 import "tailwindcss/tailwind.css";
 import { AuthProvider } from "context/AuthContext";
+import { UpvoteProvider } from "context/UpvoteContext";
 
 const App = (props: AppProps): ReactElement => (
   <>
@@ -13,7 +14,9 @@ const App = (props: AppProps): ReactElement => (
     </Head>
 
     <AuthProvider>
-      <AppContainer {...props} />
+      <UpvoteProvider>
+        <AppContainer {...props} />
+      </UpvoteProvider>
     </AuthProvider>
   </>
 );

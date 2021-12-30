@@ -9,6 +9,7 @@ import Post from "components/Post/Post";
 import InputField from "components/form-fields/InputField";
 import { PrimaryButton } from "components/Button/Button";
 import { useAuth } from "context/AuthContext";
+import { useUpvote } from "context/UpvoteContext";
 
 const validationSchema = object().shape({
   comment: string().required("Please enter your comment"),
@@ -20,6 +21,12 @@ const Comments = () => {
   const [post, setPost] = useState<Post>();
   const [postLoading, setPostLoading] = useState(true);
   const [comments, setComments] = useState<CommentType[]>([]);
+  const {
+    getUserPostUpvotes,
+    userPostUpvotes,
+    getUserCommentUpvotes,
+    userCommentUpvotes,
+  } = useUpvote();
 
   const getComments = useCallback(async () => {
     const { data } = await supabase
@@ -28,27 +35,31 @@ const Comments = () => {
       .order("inserted_at", { ascending: false })
       .eq("post", query.id);
 
+    await getUserCommentUpvotes(data);
+
     setComments(data);
   }, [query.id]);
 
+  const getPost = useCallback(async () => {
+    const { data } = await supabase
+      .from("posts")
+      .select(
+        "inserted_at, title, karma, url, id, profiles:author ( id, username )"
+      )
+      .eq("id", query.id)
+      .single();
+
+    await getUserPostUpvotes([data]);
+
+    setPost(data);
+
+    setPostLoading(false);
+  }, [query.id]);
+
   useEffect(() => {
-    const getPost = async () => {
-      const { data } = await supabase
-        .from("posts")
-        .select(
-          "inserted_at, title, karma, url, id, profiles:author ( id, username )"
-        )
-        .eq("id", query.id)
-        .single();
-
-      setPost(data);
-
-      setPostLoading(false);
-    };
-
     getPost();
     getComments();
-  }, [query.id, getComments]);
+  }, []);
 
   const onSubmit = async (values, { resetForm }) => {
     const { data } = await supabase
@@ -61,13 +72,45 @@ const Comments = () => {
     }
   };
 
+  // TODO: centralize
+  const updatePostKarma = async (postId: string) => {
+    const { error } = await supabase.rpc("increment-post-karma", {
+      post_id: postId,
+    });
+
+    if (!error) {
+      await supabase
+        .from("user_posts_upvotes")
+        .insert({ user: user.id, post: postId });
+    }
+  };
+
+  const updateCommentKarma = async (commentId: string) => {
+    const { error } = await supabase.rpc("increment-comment-karma", {
+      comment_id: commentId,
+    });
+
+    if (!error) {
+      await supabase
+        .from("user_comments_upvotes")
+        .insert({ user: user.id, comment: commentId });
+    }
+  };
+
+  console.log(userPostUpvotes, post.id);
+
   return (
     <PageWidth>
       {postLoading && <p>Loading</p>}
       {!postLoading && (
         <div>
           <div className="mb-2">
-            <Post {...post} hideComments />
+            <Post
+              {...post}
+              hideComments
+              upvoted={userPostUpvotes.includes(post.id.toString())}
+              updateKarma={updatePostKarma}
+            />
 
             <div className="mt-2 md:w-1/2">
               <Formik
@@ -96,7 +139,11 @@ const Comments = () => {
             </div>
           </div>
 
-          <CommentsContainer comments={comments} />
+          <CommentsContainer
+            comments={comments}
+            updateKarma={updateCommentKarma}
+            userCommentUpvotes={userCommentUpvotes}
+          />
         </div>
       )}
     </PageWidth>

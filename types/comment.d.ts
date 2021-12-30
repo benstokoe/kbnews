@@ -4,6 +4,7 @@ type CommentType = {
   data: string;
   karma: number;
   profiles: {
+    id: string;
     username: string;
   };
 };
