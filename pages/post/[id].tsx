@@ -49,6 +49,8 @@ const Comments = () => {
       .eq("id", query.id)
       .single();
 
+    console.log(query.id);
+
     await getUserPostUpvotes([data]);
 
     setPost(data);
@@ -57,9 +59,13 @@ const Comments = () => {
   }, [query.id]);
 
   useEffect(() => {
+    if (!query.id) {
+      return;
+    }
+
     getPost();
     getComments();
-  }, []);
+  }, [query.id]);
 
   const onSubmit = async (values, { resetForm }) => {
     const { data } = await supabase
@@ -97,8 +103,6 @@ const Comments = () => {
     }
   };
 
-  console.log(userPostUpvotes, post.id);
-
   return (
     <PageWidth>
       {postLoading && <p>Loading</p>}
@@ -108,7 +112,7 @@ const Comments = () => {
             <Post
               {...post}
               hideComments
-              upvoted={userPostUpvotes.includes(post.id.toString())}
+              upvoted={userPostUpvotes.includes(post?.id.toString())}
               updateKarma={updatePostKarma}
             />
 

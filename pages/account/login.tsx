@@ -5,7 +5,7 @@ import { Formik, Form, Field } from "formik";
 import { object, string } from "yup";
 import { useAuth } from "context/AuthContext";
 import InputField from "components/form-fields/InputField";
-import { PrimaryButton, SecondaryButton } from "components/Button/Button";
+import { PrimaryButton, Secondary } from "components/Button/Button";
 import PageWidth from "components/PageWidth/PageWidth";
 import { Title } from "components/Title/Title";
 
@@ -70,7 +70,7 @@ const Login = (): ReactElement => {
               <div className="mt-3">
                 <PrimaryButton type="submit">Submit</PrimaryButton>
                 <Link href="/account/create" passHref>
-                  <SecondaryButton>Create account</SecondaryButton>
+                  <Secondary>Create account</Secondary>
                 </Link>
               </div>
             </Form>

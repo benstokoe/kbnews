@@ -50,9 +50,9 @@ export const SecondaryButton = ({
   children,
   ...props
 }: SecondaryButtonProps): ReactElement => (
-  <Secondary onClick={handleClick} {...props}>
+  <button onClick={handleClick} {...props}>
     {children}
-  </Secondary>
+  </button>
 );
 
 type ButtonType = "button" | "submit" | "reset";
@@ -69,4 +69,5 @@ type SecondaryButtonProps = {
   handleClick?: () => void;
   children: ReactNode;
   type?: ButtonType;
+  className?: string;
 };

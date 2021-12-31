@@ -13,7 +13,7 @@ const Post = ({ title, url, ...detail }: PostProps) => (
         >
           {title}
         </a>
-        {url && <span className="text-sm text-grey-600"> ({url})</span>}
+        {url && <span className="text-sm text-secondary"> ({url})</span>}
       </span>
     )}
     {!url && (

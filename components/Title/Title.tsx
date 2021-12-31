@@ -41,7 +41,9 @@ export const Title = ({
   children: ReactNode;
   className?: string;
 }): ReactElement => (
-  <h3 className={`text-md sm:text-2xl md:text-3xl mb-4 ${className}`}>
+  <h3
+    className={`text-md sm:text-2xl md:text-3xl mb-4 text-primary ${className}`}
+  >
     {children}
   </h3>
 );

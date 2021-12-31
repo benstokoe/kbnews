@@ -1,42 +1,58 @@
-import { Secondary } from "components/Button/Button";
+import { Secondary, SecondaryButton } from "components/Button/Button";
 import { useAuth } from "context/AuthContext";
 import Link from "next/link";
-import PageWidth from "../PageWidth/PageWidth";
+import PageWidth from "components/PageWidth/PageWidth";
+import ThemeModal from "components/ThemeModal/ThemeModal";
+import { useState } from "react";
 
 const Header = () => {
   const { profile } = useAuth();
+  const [showTheme, setShowTheme] = useState(false);
+
+  const toggleTheme = () => setShowTheme((current) => !current);
 
   return (
-    <PageWidth>
-      <div className="flex justify-between items-center py-4">
-        <div className="flex items-center">
-          <Link href="/" passHref>
-            <h1 className="font-semibold text-3xl flex cursor-pointer">
-              KbNews. <div className="animate-pulse w-0.5 ml-2 bg-black"></div>
-            </h1>
-          </Link>
+    <>
+      <PageWidth>
+        <div className="flex justify-between items-center py-4">
+          <div className="flex items-center">
+            <Link href="/" passHref>
+              <h1 className="font-semibold text-3xl flex cursor-pointer text-secondary">
+                KbNews.{" "}
+                <div className="animate-pulse w-0.5 ml-2 bg-black"></div>
+              </h1>
+            </Link>
 
-          <div className="flex gap-2 ml-4">
-            <p>Top</p>
-            <p>New</p>
+            <div className="flex gap-2 ml-4">
+              <p>Top</p>
+              <p>New</p>
+            </div>
+          </div>
+
+          <div className="flex items-center">
+            <SecondaryButton handleClick={toggleTheme} className="mr-1">
+              Theme |{" "}
+            </SecondaryButton>
+
+            {profile ? (
+              <>
+                <Link href="/account" passHref>
+                  <Secondary className="mr-1">{profile.username}</Secondary>
+                </Link>
+                |
+                <Link href="/new" passHref>
+                  <Secondary className="ml-1">Submit</Secondary>
+                </Link>
+              </>
+            ) : (
+              <Link href="/account/login">Account</Link>
+            )}
           </div>
         </div>
+      </PageWidth>
 
-        {profile ? (
-          <div className="flex items-center">
-            <Link href="/account" passHref>
-              <Secondary className="mr-1">{profile.username}</Secondary>
-            </Link>
-            |
-            <Link href="/new" passHref>
-              <Secondary className="ml-1">Submit</Secondary>
-            </Link>
-          </div>
-        ) : (
-          "Account"
-        )}
-      </div>
-    </PageWidth>
+      <ThemeModal showing={showTheme} toggle={toggleTheme} />
+    </>
   );
 };
 

@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-primary: #fff;
+    --bg-secondary: #000;
+  }
+
+  .light {
+    --bg-primary: #fff;
+    --text-primary: #000;
+  }
+
+  .dark {
+    --bg-primary: #000;
+    --bg-secondary: #fff;
+    --text-primary: #fff;
+  }
+
+  .red-samurai {
+    --bg-primary: #84202c;
+    --bg-secondary: #c79e6e;
+    --text-primary: #e2dad0;
+    --text-secondary: #c79e6e;
+  }
+
+  .nord {
+    --bg-primary: #242933;
+    --text-primary: #d8dee9;
+    --text-secondary: #d8dee9;
+  }
+
+  .solarized-light {
+    --bg-primary: #fdf6e3;
+    --bg-secondary: #859900;
+    --text-primary: #181819;
+    --text-secondary: #859900;
+    --text-tertiary: #2aa198;
+  }
+
+  .solarized-dark {
+    --bg-primary: #002b36;
+    --bg-secondary: #859900;
+    --text-primary: #268bd2;
+    --text-secondary: #859900;
+    --text-tertiary: #2aa198;
+  }
+}

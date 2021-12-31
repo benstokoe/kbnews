@@ -16,7 +16,7 @@ const Detail = ({
 }: DetailProps) => {
   const { user } = useAuth();
 
-  const isUsers = useMemo(() => user.id === userId, [user, userId]);
+  const isUsers = useMemo(() => user && user.id === userId, [user, userId]);
 
   const handleUpvoteClick = () => {
     if (upvoted) {
@@ -27,7 +27,7 @@ const Detail = ({
   };
 
   return (
-    <div className="text-sm flex items-center">
+    <div className="text-sm flex items-center text-tertiary">
       {!hideUpvote && !isUsers && (
         <button
           onClick={handleUpvoteClick}

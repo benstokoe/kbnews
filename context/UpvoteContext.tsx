@@ -48,10 +48,14 @@ export const UpvoteProvider = ({ children }) => {
   const getUserPostUpvotes = async (posts: Post[]) => {
     setLoading(true);
 
+    if (!user) {
+      return;
+    }
+
     const { data } = await supabase
       .from("user_posts_upvotes")
       .select("post")
-      .eq("user", user.id)
+      .eq("user", user?.id)
       .or(posts.map((post) => `post.eq.${post.id}`).join());
 
     setLoading(false);
@@ -66,10 +70,14 @@ export const UpvoteProvider = ({ children }) => {
   const getUserCommentUpvotes = async (comments: CommentType[]) => {
     setLoading(true);
 
+    if (!user) {
+      return;
+    }
+
     const { data } = await supabase
       .from("user_comments_upvotes")
       .select("comment")
-      .eq("user", user.id)
+      .eq("user", user?.id)
       .or(comments.map((comment) => `comment.eq.${comment.id}`).join());
 
     setLoading(false);
