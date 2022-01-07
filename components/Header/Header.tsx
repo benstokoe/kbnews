@@ -12,7 +12,7 @@ const Header = () => {
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center">
             <Link href="/" passHref>
-              <h1 className="font-semibold text-3xl flex items-baseline cursor-pointer text-secondary text-logo">
+              <h1 className="font-semibold text-3xl flex items-baseline cursor-pointer text-logo">
                 KbNews.
                 <div className="animate-pulse w-0.5 ml-2 h-6 bg-secondary"></div>
               </h1>

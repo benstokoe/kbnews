@@ -1,4 +1,7 @@
-const generateColorClass = (variable) => {
+const generateColorClass = (variable, defaultVariable) => {
+  if (defaultVariable) {
+    return `var(--${variable}, var(--${defaultVariable}))`;
+  }
   return `var(--${variable})`;
 };
 
@@ -6,7 +9,7 @@ const textColor = {
   primary: generateColorClass("text-primary"),
   secondary: generateColorClass("text-secondary"),
   tertiary: generateColorClass("text-tertiary"),
-  logo: generateColorClass("text-logo"),
+  logo: generateColorClass("text-logo", "text-secondary"),
 };
 
 const backgroundColor = {

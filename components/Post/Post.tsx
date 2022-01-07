@@ -47,12 +47,12 @@ const Post = ({
       <div className="px-5 hidden lg:flex flex-col justify-center items-center text-center w-20">
         <SecondaryButton
           handleClick={handleUpvoteClick}
-          className={upvoted && "pointer-events-none"}
+          className={upvoted && "pointer-events-none text-tertiary"}
         >
-          <FaArrowUp className="mb-1" color={upvoted && "salmon"} />
+          <FaArrowUp className="mb-1" />
         </SecondaryButton>
 
-        <p className="text-xs font-medium text-tertiary">{karma}</p>
+        <p className="text-sm font-medium text-tertiary">{karma}</p>
       </div>
       <div className="md:px-5 lg:border-l">
         {url && (

@@ -110,7 +110,7 @@ const Posts = ({ sort = TOP }: PostsProps) => {
   return (
     <PageWidth>
       <div className="md:max-w-2xl">
-        {posts.map((post, index) => (
+        {posts.map((post) => (
           <div key={post.title} className="flex mb-3">
             <Post
               {...post}

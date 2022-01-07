@@ -53,6 +53,44 @@
     --text-secondary: #7eddd3;
     --text-tertiary: #7eddd3;
   }
+
+  .gmk-8008 {
+    --bg-primary: #8d98a7;
+    --bg-secondary: #313943;
+    --text-primary: #313943;
+    --text-secondary: #fe5487;
+    --text-tertiary: #fe5487;
+  }
+
+  .gmk-9009 {
+    --bg-primary: #d8d2c3;
+    --bg-secondary: #aca693;
+    --text-primary: #171718;
+    --text-secondary: #768e72;
+    --text-tertiary: #c87e74;
+  }
+
+  .carbon {
+    --bg-primary: #e3d5b9;
+    --bg-secondary: #464746;
+    --text-primary: #464746;
+    --text-secondary: #e86700;
+  }
+
+  .bliss {
+    --bg-primary: #555657;
+    --text-primary: #f5d1c8;
+    --text-secondary: #f5d1c8;
+    --text-tertiary: #f5d1c8;
+  }
+
+  .milkshake {
+    --bg-primary: #fff;
+    --bg-secondary: #f0849e;
+    --text-primary: #232d43;
+    --text-secondary: #c091ed;
+    --text-tertiary: #75cde8;
+  }
 }
 
 @layer utilities {

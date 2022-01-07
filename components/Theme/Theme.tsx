@@ -1,34 +1,6 @@
-import { useEffect } from "react";
-import { useLocalStorage } from "hooks/useSessionStorage";
 import { Title } from "components/Title/Title";
 import { useTheme } from "context/ThemeContext";
-
-const themes = [
-  {
-    name: "BOW",
-    class: "light",
-  },
-  {
-    name: "WOB",
-    class: "dark",
-  },
-  {
-    name: "Red Samurai",
-    class: "red-samurai",
-  },
-  {
-    name: "Laser",
-    class: "laser",
-  },
-  {
-    name: "Susuwatari",
-    class: "susuwatari",
-  },
-  {
-    name: "Modern Dolch",
-    class: "modern-dolch",
-  },
-];
+import themes from "themes";
 
 const Theme = () => {
   const { currentTheme, setCurrentTheme } = useTheme();

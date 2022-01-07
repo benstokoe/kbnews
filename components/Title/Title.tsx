@@ -27,9 +27,7 @@ export const PageTitle = ({
   children: ReactNode;
   className?: string;
 }): ReactElement => (
-  <div
-    className={`text-2xl sm:text-3xl md:text-4xl dark:text-white my-6 ${className}`}
-  >
+  <div className={`text-2xl sm:text-3xl text-logo  my-6 ${className}`}>
     {children}
   </div>
 );
@@ -41,9 +39,5 @@ export const Title = ({
   children: ReactNode;
   className?: string;
 }): ReactElement => (
-  <h3
-    className={`text-md sm:text-2xl md:text-3xl mb-4 text-primary ${className}`}
-  >
-    {children}
-  </h3>
+  <h3 className={`text-md text-tertiary mb-4 ${className}`}>{children}</h3>
 );
