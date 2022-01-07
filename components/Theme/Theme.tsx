@@ -1,6 +1,7 @@
 import { useEffect } from "react";
-import Modal from "components/Modal/Modal";
 import { useLocalStorage } from "hooks/useSessionStorage";
+import { Title } from "components/Title/Title";
+import { useTheme } from "context/ThemeContext";
 
 const themes = [
   {
@@ -16,34 +17,26 @@ const themes = [
     class: "red-samurai",
   },
   {
-    name: "Nord",
-    class: "nord",
+    name: "Laser",
+    class: "laser",
   },
   {
-    name: "Solarized Light",
-    class: "solarized-light",
+    name: "Susuwatari",
+    class: "susuwatari",
   },
   {
-    name: "Solarized Dark",
-    class: "solarized-dark",
+    name: "Modern Dolch",
+    class: "modern-dolch",
   },
 ];
 
-const ThemeModal = ({ showing, toggle }) => {
-  const [currentTheme, setCurrentTheme] = useLocalStorage(
-    "currentTheme",
-    "light"
-  );
+const Theme = () => {
+  const { currentTheme, setCurrentTheme } = useTheme();
 
-  useEffect(() => {
-    document.body.classList.add(currentTheme);
-
-    return () => {
-      document.body.classList.remove(currentTheme);
-    };
-  }, [currentTheme]);
   return (
-    <Modal title="Theme" showing={showing} toggle={toggle}>
+    <div>
+      <Title>Theme</Title>
+
       <div className="grid gap-1 grid-cols-2">
         {themes.map((theme) => (
           <div
@@ -59,8 +52,8 @@ const ThemeModal = ({ showing, toggle }) => {
           </div>
         ))}
       </div>
-    </Modal>
+    </div>
   );
 };
 
-export default ThemeModal;
+export default Theme;

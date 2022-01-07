@@ -6,6 +6,7 @@ const textColor = {
   primary: generateColorClass("text-primary"),
   secondary: generateColorClass("text-secondary"),
   tertiary: generateColorClass("text-tertiary"),
+  logo: generateColorClass("text-logo"),
 };
 
 const backgroundColor = {
@@ -23,8 +24,8 @@ module.exports = {
   darkMode: "class", // or 'media' or 'class'
   theme: {
     fontFamily: {
-      display: ["Open Sans", "system-ui", "sans-serif"],
-      body: ["Open Sans", "system-ui", "sans-serif"],
+      display: ["Inter", "system-ui", "sans-serif"],
+      body: ["Inter", "system-ui", "sans-serif"],
     },
     extend: {
       textColor,

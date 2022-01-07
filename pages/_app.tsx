@@ -5,9 +5,10 @@ import AppContainer from "containers/AppContainer";
 import { AuthProvider } from "context/AuthContext";
 import { UpvoteProvider } from "context/UpvoteContext";
 
-import "@fontsource/open-sans";
+import "@fontsource/inter";
 import "tailwindcss/tailwind.css";
 import "styles/globals.css";
+import { ThemeProvider } from "context/ThemeContext";
 
 const App = (props: AppProps): ReactElement => (
   <>
@@ -17,7 +18,9 @@ const App = (props: AppProps): ReactElement => (
 
     <AuthProvider>
       <UpvoteProvider>
-        <AppContainer {...props} />
+        <ThemeProvider>
+          <AppContainer {...props} />
+        </ThemeProvider>
       </UpvoteProvider>
     </AuthProvider>
   </>

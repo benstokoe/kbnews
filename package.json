@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fontsource/inter": "^4.5.1",
     "@fontsource/open-sans": "^4.5.2",
     "@headlessui/react": "^1.4.2",
     "@supabase/supabase-js": "^1.28.5",

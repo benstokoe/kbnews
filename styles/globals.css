@@ -6,17 +6,21 @@
   :root {
     --bg-primary: #fff;
     --bg-secondary: #000;
+    --text-secondary: #000;
   }
 
   .light {
     --bg-primary: #fff;
     --text-primary: #000;
+    --text-logo: #000;
   }
 
   .dark {
     --bg-primary: #000;
     --bg-secondary: #fff;
     --text-primary: #fff;
+    --text-secondary: #000;
+    --text-logo: #fff;
   }
 
   .red-samurai {
@@ -26,25 +30,40 @@
     --text-secondary: #c79e6e;
   }
 
-  .nord {
-    --bg-primary: #242933;
-    --text-primary: #d8dee9;
-    --text-secondary: #d8dee9;
+  .laser {
+    --bg-primary: #221b44;
+    --bg-secondary: #009eaf;
+    --text-primary: #dbe7e8;
+    --text-secondary: #b82356;
+    --text-tertiary: #009eaf;
   }
 
-  .solarized-light {
-    --bg-primary: #fdf6e3;
-    --bg-secondary: #859900;
-    --text-primary: #181819;
-    --text-secondary: #859900;
-    --text-tertiary: #2aa198;
+  .susuwatari {
+    --bg-primary: #474341;
+    --bg-secondary: #2c2b2a;
+    --text-primary: #f0dea6;
+    --text-secondary: #bd1d04;
+    --text-tertiary: #309fd9;
   }
 
-  .solarized-dark {
-    --bg-primary: #002b36;
-    --bg-secondary: #859900;
-    --text-primary: #268bd2;
-    --text-secondary: #859900;
-    --text-tertiary: #2aa198;
+  .modern-dolch {
+    --bg-primary: #2d2e30;
+    --bg-secondary: #54585c;
+    --text-primary: #e3e6eb;
+    --text-secondary: #7eddd3;
+    --text-tertiary: #7eddd3;
+  }
+}
+
+@layer utilities {
+  .bg-overlay {
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    min-height: 100%;
+    background-color: #f4f4f4;
+    opacity: 0.3;
+    background-image: radial-gradient(#444cf7 1px, #e5e5f7 1px);
+    background-size: 20px 20px;
   }
 }

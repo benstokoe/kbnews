@@ -9,7 +9,7 @@ const StyledButton = ({
   disabled: boolean;
 }): ReactElement => (
   <button
-    className="disabled:opacity-50 disabled:cursor-default bg-black h-12 text-white font-bold capitalize hover:scale-up w-full p-2"
+    className="disabled:opacity-50 disabled:cursor-default bg-black h-12 text-white font-bold capitalize hover:scale-up w-full p-2 bg-secondary"
     type="button"
     {...props}
   >

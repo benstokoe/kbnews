@@ -27,7 +27,7 @@ const Detail = ({
   };
 
   return (
-    <div className="text-sm flex items-center text-tertiary">
+    <div className="text-sm flex items-center text-tertiary flex-wrap">
       {!hideUpvote && !isUsers && (
         <button
           onClick={handleUpvoteClick}
@@ -37,11 +37,13 @@ const Detail = ({
         </button>
       )}
       <span className="">
-        {karma} points by{" "}
-        <span className={isUsers && "text-yellow-600"}>{username}</span>{" "}
-        {formatDistanceToNow(new Date(inserted_at), { addSuffix: true })}&nbsp;
+        <span className="bg-secondary px-2 rounded-lg text-secondary">
+          {karma}
+        </span>{" "}
+        by <span className={isUsers && "text-yellow-600"}>{username}</span>{" "}
+        {formatDistanceToNow(new Date(inserted_at), { addSuffix: true })}
       </span>
-      | report
+      {/* &nbsp;| report */}
       {!hideComments && (
         <>
           &nbsp;|&nbsp;

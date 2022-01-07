@@ -1,15 +1,10 @@
-import { Secondary, SecondaryButton } from "components/Button/Button";
+import { Secondary } from "components/Button/Button";
 import { useAuth } from "context/AuthContext";
 import Link from "next/link";
 import PageWidth from "components/PageWidth/PageWidth";
-import ThemeModal from "components/ThemeModal/ThemeModal";
-import { useState } from "react";
 
 const Header = () => {
   const { profile } = useAuth();
-  const [showTheme, setShowTheme] = useState(false);
-
-  const toggleTheme = () => setShowTheme((current) => !current);
 
   return (
     <>
@@ -17,9 +12,9 @@ const Header = () => {
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center">
             <Link href="/" passHref>
-              <h1 className="font-semibold text-3xl flex cursor-pointer text-secondary">
-                KbNews.{" "}
-                <div className="animate-pulse w-0.5 ml-2 bg-black"></div>
+              <h1 className="font-semibold text-3xl flex items-baseline cursor-pointer text-secondary text-logo">
+                KbNews.
+                <div className="animate-pulse w-0.5 ml-2 h-6 bg-secondary"></div>
               </h1>
             </Link>
 
@@ -29,19 +24,21 @@ const Header = () => {
             </div>
           </div>
 
-          <div className="flex items-center">
-            <SecondaryButton handleClick={toggleTheme} className="mr-1">
-              Theme |{" "}
-            </SecondaryButton>
-
+          <div className="flex items-center gap-1">
+            <Link href="/settings" passHref>
+              <Secondary>Settings</Secondary>
+            </Link>
+            |
             {profile ? (
               <>
                 <Link href="/account" passHref>
-                  <Secondary className="mr-1">{profile.username}</Secondary>
+                  <Secondary className="text-tertiary">
+                    {profile.username}
+                  </Secondary>
                 </Link>
                 |
                 <Link href="/new" passHref>
-                  <Secondary className="ml-1">Submit</Secondary>
+                  <Secondary>Submit</Secondary>
                 </Link>
               </>
             ) : (
@@ -50,8 +47,6 @@ const Header = () => {
           </div>
         </div>
       </PageWidth>
-
-      <ThemeModal showing={showTheme} toggle={toggleTheme} />
     </>
   );
 };

@@ -109,17 +109,19 @@ const Posts = ({ sort = TOP }: PostsProps) => {
 
   return (
     <PageWidth>
-      {posts.map((post, index) => (
-        <div key={post.title} className="flex mb-3">
-          <Post
-            {...post}
-            updateKarma={updateKarma}
-            upvoted={userPostUpvotes.includes(post.id)}
-          />
-        </div>
-      ))}
+      <div className="md:max-w-2xl">
+        {posts.map((post, index) => (
+          <div key={post.title} className="flex mb-3">
+            <Post
+              {...post}
+              updateKarma={updateKarma}
+              upvoted={userPostUpvotes.includes(post.id)}
+            />
+          </div>
+        ))}
 
-      <Pagination count={count} perPage={perPage} currentPage={currentPage} />
+        <Pagination count={count} perPage={perPage} currentPage={currentPage} />
+      </div>
     </PageWidth>
   );
 };
