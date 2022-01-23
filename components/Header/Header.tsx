@@ -1,10 +1,10 @@
 import { Secondary } from "components/Button/Button";
-import { useAuth } from "context/AuthContext";
 import Link from "next/link";
 import PageWidth from "components/PageWidth/PageWidth";
+import { useUser } from "hooks/use-user";
 
 const Header = () => {
-  const { profile } = useAuth();
+  const { profile } = useUser();
 
   return (
     <>

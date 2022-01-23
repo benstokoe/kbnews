@@ -4,22 +4,22 @@ import { supabase } from "utils/supabaseClient";
 import Post from "components/Post/Post";
 import Pagination from "components/Pagination/Pagination";
 import { useRouter } from "next/router";
-import { useAuth } from "context/AuthContext";
 import { NEW, TOP } from "constants/sorting";
 import { useUpvote } from "context/UpvoteContext";
+import { useUser } from "hooks/use-user";
 
 const perPage = 15;
 
 const Posts = ({ sort = TOP }: PostsProps) => {
   const { query } = useRouter();
   const [count, setCount] = useState(0);
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState<number>(
     parseInt((query?.page as string) ?? "1")
   );
   const [error, setError] = useState(false);
-  const { user } = useAuth();
+  const { user } = useUser();
   const { getUserPostUpvotes, userPostUpvotes } = useUpvote();
 
   const startIndex = useMemo(
@@ -41,23 +41,23 @@ const Posts = ({ sort = TOP }: PostsProps) => {
       setLoading(true);
 
       const query = supabase
-        .from("posts")
-        .select(
-          "inserted_at, title, karma, url, id, profiles:author ( id, username )"
-        )
+        .from("submissions")
+        .select("inserted_at, title, url, id, profiles ( id, username )")
         .range(startIndex, endIndex);
 
-      if (sort === NEW) {
-        query.order("inserted_at", { ascending: false });
-      }
+      // if (sort === NEW) {
+      query.order("inserted_at", { ascending: false });
+      // }
 
-      if (sort === TOP) {
-        query.order("inserted_at", {
-          ascending: false,
-        });
-      }
+      // if (sort === TOP) {
+      //   query.order("inserted_at", {
+      //     ascending: false,
+      //   });
+      // }
 
       const { data, error } = await query;
+
+      console.log(data);
 
       await getUserPostUpvotes(data);
 
@@ -111,7 +111,7 @@ const Posts = ({ sort = TOP }: PostsProps) => {
     <PageWidth>
       <div className="md:max-w-2xl">
         {posts.map((post) => (
-          <div key={post.title} className="flex mb-3">
+          <div key={post.title} className="flex mb-5 w-full">
             <Post
               {...post}
               updateKarma={updateKarma}

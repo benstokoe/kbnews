@@ -2,95 +2,93 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --bg-primary: #fff;
-    --bg-secondary: #000;
-    --text-secondary: #000;
-  }
+:root {
+  --bg-primary: #fff;
+  --bg-secondary: #000;
+  --text-secondary: #000;
+}
 
-  .light {
-    --bg-primary: #fff;
-    --text-primary: #000;
-    --text-logo: #000;
-  }
+.light {
+  --bg-primary: #fff;
+  --text-primary: #000;
+  --text-logo: #000;
+}
 
-  .dark {
-    --bg-primary: #000;
-    --bg-secondary: #fff;
-    --text-primary: #fff;
-    --text-secondary: #000;
-    --text-logo: #fff;
-  }
+.dark {
+  --bg-primary: #000;
+  --bg-secondary: #fff;
+  --text-primary: #fff;
+  --text-secondary: #000;
+  --text-logo: #fff;
+}
 
-  .red-samurai {
-    --bg-primary: #84202c;
-    --bg-secondary: #c79e6e;
-    --text-primary: #e2dad0;
-    --text-secondary: #c79e6e;
-  }
+.red-samurai {
+  --bg-primary: #84202c;
+  --bg-secondary: #c79e6e;
+  --text-primary: #e2dad0;
+  --text-secondary: #c79e6e;
+}
 
-  .laser {
-    --bg-primary: #221b44;
-    --bg-secondary: #009eaf;
-    --text-primary: #dbe7e8;
-    --text-secondary: #b82356;
-    --text-tertiary: #009eaf;
-  }
+.laser {
+  --bg-primary: #221b44;
+  --bg-secondary: #009eaf;
+  --text-primary: #dbe7e8;
+  --text-secondary: #b82356;
+  --text-tertiary: #009eaf;
+}
 
-  .susuwatari {
-    --bg-primary: #474341;
-    --bg-secondary: #2c2b2a;
-    --text-primary: #f0dea6;
-    --text-secondary: #bd1d04;
-    --text-tertiary: #309fd9;
-  }
+.susuwatari {
+  --bg-primary: #474341;
+  --bg-secondary: #2c2b2a;
+  --text-primary: #f0dea6;
+  --text-secondary: #bd1d04;
+  --text-tertiary: #309fd9;
+}
 
-  .modern-dolch {
-    --bg-primary: #2d2e30;
-    --bg-secondary: #54585c;
-    --text-primary: #e3e6eb;
-    --text-secondary: #7eddd3;
-    --text-tertiary: #7eddd3;
-  }
+.modern-dolch {
+  --bg-primary: #2d2e30;
+  --bg-secondary: #54585c;
+  --text-primary: #e3e6eb;
+  --text-secondary: #7eddd3;
+  --text-tertiary: #7eddd3;
+}
 
-  .gmk-8008 {
-    --bg-primary: #8d98a7;
-    --bg-secondary: #313943;
-    --text-primary: #313943;
-    --text-secondary: #fe5487;
-    --text-tertiary: #fe5487;
-  }
+.gmk-8008 {
+  --bg-primary: #8d98a7;
+  --bg-secondary: #313943;
+  --text-primary: #313943;
+  --text-secondary: #fe5487;
+  --text-tertiary: #fe5487;
+}
 
-  .gmk-9009 {
-    --bg-primary: #d8d2c3;
-    --bg-secondary: #aca693;
-    --text-primary: #171718;
-    --text-secondary: #768e72;
-    --text-tertiary: #c87e74;
-  }
+.gmk-9009 {
+  --bg-primary: #d8d2c3;
+  --bg-secondary: #aca693;
+  --text-primary: #171718;
+  --text-secondary: #768e72;
+  --text-tertiary: #c87e74;
+}
 
-  .carbon {
-    --bg-primary: #e3d5b9;
-    --bg-secondary: #464746;
-    --text-primary: #464746;
-    --text-secondary: #e86700;
-  }
+.carbon {
+  --bg-primary: #e3d5b9;
+  --bg-secondary: #464746;
+  --text-primary: #464746;
+  --text-secondary: #e86700;
+}
 
-  .bliss {
-    --bg-primary: #555657;
-    --text-primary: #f5d1c8;
-    --text-secondary: #f5d1c8;
-    --text-tertiary: #f5d1c8;
-  }
+.bliss {
+  --bg-primary: #555657;
+  --text-primary: #f5d1c8;
+  --text-secondary: #f5d1c8;
+  --text-tertiary: #f5d1c8;
+}
 
-  .milkshake {
-    --bg-primary: #fff;
-    --bg-secondary: #f0849e;
-    --text-primary: #232d43;
-    --text-secondary: #c091ed;
-    --text-tertiary: #75cde8;
-  }
+.milkshake {
+  --bg-primary: #fff;
+  --bg-secondary: #f0849e;
+  --text-primary: #232d43;
+  --text-secondary: #c091ed;
+  --text-tertiary: #75cde8;
 }
 
 @layer utilities {
@@ -103,5 +101,21 @@
     opacity: 0.3;
     background-image: radial-gradient(#444cf7 1px, #e5e5f7 1px);
     background-size: 20px 20px;
+  }
+
+  .comment-grid {
+    grid-template-columns: fit-content(1.75rem) minmax(0, 1fr);
+  }
+
+  .skeleton {
+    background-image: linear-gradient(
+      270deg,
+      var(--accents-1),
+      var(--accents-2),
+      var(--accents-2),
+      var(--accents-1)
+    );
+    background-size: 400% 100%;
+    animation: loading 8s ease-in-out infinite;
   }
 }

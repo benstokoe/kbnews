@@ -1,6 +1,6 @@
+import { useUser } from "hooks/use-user";
 import React, { useContext, useState, useEffect } from "react";
 import { supabase } from "utils/supabaseClient";
-import { useAuth } from "./AuthContext";
 
 type UpvoteContext = {
   loading?: boolean;
@@ -23,7 +23,7 @@ type UserCommentUpvotesTable = {
 const UpvoteContext = React.createContext<UpvoteContext>({});
 
 export const UpvoteProvider = ({ children }) => {
-  const { user } = useAuth();
+  const { user } = useUser();
   const [loading, setLoading] = useState(false);
   const [userPostUpvotes, setUserPostUpvotes] = useState<string[]>([]);
   const [userCommentUpvotes, setUserCommentUpvotes] = useState<string[]>([]);
@@ -64,7 +64,7 @@ export const UpvoteProvider = ({ children }) => {
       post.post.toString()
     );
 
-    setUserPostUpvotes(postUpvotes);
+    setUserPostUpvotes(postUpvotes || []);
   };
 
   const getUserCommentUpvotes = async (comments: CommentType[]) => {
@@ -86,7 +86,7 @@ export const UpvoteProvider = ({ children }) => {
       (comment: UserCommentUpvotesTable) => comment.comment
     );
 
-    setUserCommentUpvotes(commentUpvotes);
+    setUserCommentUpvotes(commentUpvotes || []);
   };
 
   const value = {

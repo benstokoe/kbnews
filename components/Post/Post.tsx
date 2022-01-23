@@ -1,24 +1,10 @@
 import { useMemo } from "react";
 import Link from "next/link";
-import { formatDistanceToNow } from "date-fns";
 import { FaArrowUp } from "react-icons/fa";
-import { BiMessageDetail } from "react-icons/bi";
-import { FiThumbsUp } from "react-icons/fi";
-import { AiOutlineArrowUp } from "react-icons/ai";
-import { useAuth } from "context/AuthContext";
 import { SecondaryButton } from "components/Button/Button";
-
-const domain_from_url = (url: string): string => {
-  if (!url) {
-    return "";
-  }
-
-  const match = url.match(
-    /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n\?\=]+)/im
-  );
-
-  return match[1];
-};
+import Detail from "components/Detail/Detail";
+import classNames from "classnames";
+import { useUser } from "hooks/use-user";
 
 const Post = ({
   title,
@@ -26,11 +12,12 @@ const Post = ({
   id,
   karma,
   profiles: { id: userId, username },
-  inserted_at,
   updateKarma,
   upvoted,
+  hideUpvotes,
+  ...detail
 }: PostProps) => {
-  const { user } = useAuth();
+  const { user } = useUser();
 
   const isUsers = useMemo(() => user && user.id === userId, [user, userId]);
 
@@ -43,11 +30,18 @@ const Post = ({
   };
 
   return (
-    <>
-      <div className="px-5 hidden lg:flex flex-col justify-center items-center text-center w-20">
+    <div className="w-full flex">
+      <div
+        className={classNames(
+          "px-5 mb-5 hidden lg:flex flex-col justify-center items-center text-center w-20",
+          { "pl-0 w-10": hideUpvotes }
+        )}
+      >
         <SecondaryButton
           handleClick={handleUpvoteClick}
-          className={upvoted && "pointer-events-none text-tertiary"}
+          className={classNames({
+            "pointer-events-none text-tertiary": upvoted,
+          })}
         >
           <FaArrowUp className="mb-1" />
         </SecondaryButton>
@@ -71,27 +65,16 @@ const Post = ({
           </Link>
         )}
 
-        <div className="flex mt-2 text-primary opacity-75">
-          <p className="hidden lg:inline-block text-xs mr-4">
-            by <span className="font-medium">{username}</span>
-          </p>
-          <p className="text-xs mr-4">
-            {formatDistanceToNow(new Date(inserted_at), { addSuffix: true })}
-          </p>
-          <p className="text-xs hidden lg:inline-block mr-4">
-            {domain_from_url(url)}
-          </p>
-          <figure className="flex items-start mr-4">
-            <BiMessageDetail className="mr-1" />
-            <figcaption className="text-xs">133</figcaption>
-          </figure>
-          <div className="lg:hidden flex items-start">
-            <FiThumbsUp className="mr-1" />
-            <p className="text-xs">{karma}</p>
-          </div>
-        </div>
+        <Detail
+          {...detail}
+          id={id}
+          url={url}
+          username={username}
+          karma={karma}
+          upvoted={upvoted}
+        />
       </div>
-    </>
+    </div>
   );
 };
 
@@ -99,6 +82,7 @@ type PostProps = Post & {
   hideComments?: boolean;
   updateKarma?: (postId: string) => void;
   upvoted: boolean;
+  hideUpvotes: boolean;
 };
 
 export default Post;

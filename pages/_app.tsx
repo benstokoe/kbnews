@@ -9,6 +9,8 @@ import "@fontsource/inter";
 import "tailwindcss/tailwind.css";
 import "styles/globals.css";
 import { ThemeProvider } from "context/ThemeContext";
+import { UserContextProvider } from "hooks/use-user";
+import { ModalProvider } from "hooks/use-modal";
 
 const App = (props: AppProps): ReactElement => (
   <>
@@ -16,13 +18,17 @@ const App = (props: AppProps): ReactElement => (
       <meta name="viewport" content="width=device-width, initial-scale=1" />
     </Head>
 
-    <AuthProvider>
-      <UpvoteProvider>
-        <ThemeProvider>
-          <AppContainer {...props} />
-        </ThemeProvider>
-      </UpvoteProvider>
-    </AuthProvider>
+    <ModalProvider>
+      <AuthProvider>
+        <UserContextProvider>
+          <UpvoteProvider>
+            <ThemeProvider>
+              <AppContainer {...props} />
+            </ThemeProvider>
+          </UpvoteProvider>
+        </UserContextProvider>
+      </AuthProvider>
+    </ModalProvider>
   </>
 );
 

@@ -4,10 +4,10 @@ import { Formik, Form, Field } from "formik";
 import { object, string } from "yup";
 import PageWidth from "components/PageWidth/PageWidth";
 import { Title } from "components/Title/Title";
-import { useAuth } from "context/AuthContext";
 import InputField from "components/form-fields/InputField";
 import { PrimaryButton } from "components/Button/Button";
 import { supabase } from "utils/supabaseClient";
+import { useUser } from "hooks/use-user";
 
 const validationSchema = object().shape({
   title: string().required("Please enter a title"),
@@ -15,7 +15,7 @@ const validationSchema = object().shape({
 });
 
 const New = () => {
-  const { user, loading } = useAuth();
+  const { user, loading } = useUser();
   const { replace, push } = useRouter();
 
   useEffect(() => {
