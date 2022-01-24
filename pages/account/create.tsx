@@ -95,10 +95,10 @@ const Create = (): ReactElement => {
   );
 };
 
-type CreateForm = {
+interface CreateForm {
   username: string;
   email: string;
   password: string;
-};
+}
 
 export default Create;

@@ -17,7 +17,7 @@ const InputField = ({
   />
 );
 
-type InputFieldProps = {
+interface InputFieldProps {
   field: {
     name: string;
     value: string;
@@ -31,6 +31,6 @@ type InputFieldProps = {
   placeholder: string;
   type: string;
   error: string;
-};
+}
 
 export default InputField;

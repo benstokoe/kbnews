@@ -6,7 +6,7 @@ import { supabase } from "utils/supabaseClient";
 import cn from "classnames";
 // import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
-import VoteButtons from "components/VoteButtons/VoteButtons";
+import VoteButtons from "components/VoteButtons/CommentVoteButtons";
 import { formatDistanceToNow } from "date-fns";
 import Avatar from "components/Avatar/Avatar";
 

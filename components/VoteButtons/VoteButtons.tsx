@@ -1,113 +1,24 @@
-import { useComments } from "hooks/use-comments";
-import { useUser } from "hooks/use-user";
-import { AiOutlineHeart } from "react-icons/ai";
 import { BsHandThumbsUp, BsHandThumbsUpFill } from "react-icons/bs";
-import { supabase } from "utils/supabaseClient";
+import { AiOutlineHeart } from "react-icons/ai";
 import cn from "classnames";
-import React from "react";
-
-type StatusType = "upvoted" | "unvoted" | "downvoted";
-
-export async function invokeVote(
-  postId: number,
-  userId: string,
-  value: number
-): Promise<any> {
-  return supabase
-    .from("votes")
-    .upsert([{ postId, userId, value }], {
-      onConflict: "postId, userId",
-    })
-    .then(({ data, error }) => {
-      if (error) {
-        console.log(error);
-        throw error;
-      }
-
-      return data;
-    });
-}
-
-export const mutateVotes = (
-  mutate: any,
-  postId: number,
-  incrementBy: number,
-  userVoteValue: number
-): Promise<any> =>
-  mutate(
-    (pages: CommentType[][]) =>
-      pages.map((comments) =>
-        comments.map((comment) => {
-          if (comment.id === postId) {
-            const newComment = {
-              ...comment,
-              votes: comment.votes + incrementBy,
-              userVoteValue,
-            };
-
-            return newComment;
-          }
-          return comment;
-        })
-      ),
-    false
-  );
-
-function resolveStatus(userVoteValue: number | undefined | null): StatusType {
-  if (userVoteValue === 1) return "upvoted";
-  if (userVoteValue === -1) return "downvoted";
-  return "unvoted";
-}
-
 interface Props {
-  comment: CommentType;
   config?: {
     type?: "heart" | "thumbs";
     canDownvote?: boolean;
   };
+  votes: number;
+  status: string;
+  handleUpvote: () => void;
+  handleDownvote: () => void;
 }
 
 const VoteButtons = ({
-  comment,
-  config = { type: "thumbs", canDownvote: true },
-}: Props): JSX.Element | null => {
-  const { user } = useUser();
-  const { mutateComments } = useComments();
-  const status = resolveStatus(comment.userVoteValue);
-  // const { open } = useModal();
-
-  function handleUpvote(): void {
-    // if (!user || !user.id) return open("signInModal");
-
-    if (status === "unvoted") {
-      invokeVote(comment.id, user.id, 1);
-      mutateVotes(mutateComments, comment.id, 1, 1);
-    } else if (status === "upvoted") {
-      invokeVote(comment.id, user.id, 0);
-      mutateVotes(mutateComments, comment.id, -1, 0);
-    } else if (status === "downvoted") {
-      invokeVote(comment.id, user.id, 1);
-      mutateVotes(mutateComments, comment.id, 2, 1);
-    }
-  }
-
-  function handleDownvote(): void {
-    // if (!user || !user.id) return open("signInModal");
-
-    if (status === "unvoted") {
-      invokeVote(comment.id, user.id, -1);
-      mutateVotes(mutateComments, comment.id, -1, -1);
-    } else if (status === "upvoted") {
-      invokeVote(comment.id, user.id, -1);
-      mutateVotes(mutateComments, comment.id, -2, -1);
-    } else if (status === "downvoted") {
-      invokeVote(comment.id, user.id, 0);
-      mutateVotes(mutateComments, comment.id, 1, 0);
-    }
-  }
-
-  if (!comment) return null;
-
+  config,
+  votes,
+  status,
+  handleUpvote,
+  handleDownvote,
+}: Props) => {
   return (
     <div className="flex items-center">
       {config.type === "heart" ? (
@@ -123,7 +34,7 @@ const VoteButtons = ({
             })}
           />
           <span className="ml-1 text-gray-600 dark:text-gray-400 tabular-nums">
-            {comment.votes}
+            {votes}
           </span>
         </button>
       ) : (
@@ -141,7 +52,7 @@ const VoteButtons = ({
             )}
           </button>
           <span className="text-xs tabular-nums min-w-[12px] text-center mx-1">
-            {comment.votes}
+            {votes}
           </span>
           {config.canDownvote && (
             <button

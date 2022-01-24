@@ -103,8 +103,6 @@ const NewCommentForm = ({
       slug,
     };
 
-    console.log(post);
-
     mutateGlobalCount((count: number) => count + 1, false);
 
     mutateComments(async (pages: CommentType[]) => {

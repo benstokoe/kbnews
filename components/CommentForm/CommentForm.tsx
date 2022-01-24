@@ -1,22 +1,10 @@
 import { Formik, Form, Field } from "formik";
-import { addMethod, object, string, test } from "yup";
-import Profanity from "profanity-js";
+import { addMethod, object, string } from "yup";
 import InputField from "components/form-fields/InputField";
 import { PrimaryButton, SecondaryButton } from "components/Button/Button";
 
-addMethod(string, "profanityCheck", function (errorMessage) {
-  return this.test(`test-card-length`, errorMessage, function (value) {
-    const { path, createError } = this;
-
-    // return (
-    //   // profanity.isProfane(value) || createError({ path, message: errorMessage })
-    // );
-  });
-});
-
 const validationSchema = object().shape({
   comment: string().required("Please enter your comment"),
-  // .profanityCheck("no profanity please"),
 });
 
 const CommentForm = ({
@@ -61,11 +49,11 @@ const CommentForm = ({
   );
 };
 
-type CommentFormProps = {
+interface CommentFormProps {
   onSubmit: (values: Record<string, unknown>, { resetForm }) => void;
   title?: string;
   showCancel?: boolean;
   handleCancelClick?: () => void;
-};
+}
 
 export default CommentForm;

@@ -1,10 +1,10 @@
 import { useLocalStorage } from "hooks/useSessionStorage";
 import React, { useContext, useState, useEffect } from "react";
 
-type ThemeContext = {
+interface ThemeContext {
   currentTheme?: string;
   setCurrentTheme?: (theme: string) => void;
-};
+}
 
 const ThemeContext = React.createContext<ThemeContext>({});
 

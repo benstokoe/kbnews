@@ -1,4 +1,4 @@
-type Post = {
+interface Post {
   title: string;
   karma: number;
   profiles: {
@@ -7,5 +7,8 @@ type Post = {
   };
   inserted_at: string;
   url: string;
-  id: string;
-};
+  id: number;
+  votes: number;
+  userVoteValue: number;
+  commentsCount: number;
+}

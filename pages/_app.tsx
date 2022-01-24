@@ -3,7 +3,6 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import AppContainer from "containers/AppContainer";
 import { AuthProvider } from "context/AuthContext";
-import { UpvoteProvider } from "context/UpvoteContext";
 
 import "@fontsource/inter";
 import "tailwindcss/tailwind.css";
@@ -21,11 +20,9 @@ const App = (props: AppProps): ReactElement => (
     <ModalProvider>
       <AuthProvider>
         <UserContextProvider>
-          <UpvoteProvider>
-            <ThemeProvider>
-              <AppContainer {...props} />
-            </ThemeProvider>
-          </UpvoteProvider>
+          <ThemeProvider>
+            <AppContainer {...props} />
+          </ThemeProvider>
         </UserContextProvider>
       </AuthProvider>
     </ModalProvider>

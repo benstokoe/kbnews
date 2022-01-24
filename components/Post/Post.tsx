@@ -1,33 +1,23 @@
-import { useMemo } from "react";
 import Link from "next/link";
-import { FaArrowUp } from "react-icons/fa";
-import { SecondaryButton } from "components/Button/Button";
 import Detail from "components/Detail/Detail";
 import classNames from "classnames";
-import { useUser } from "hooks/use-user";
+import PostVoteButtons from "components/VoteButtons/PostVoteButtons";
+import resolveStatus from "utils/resolve-vote-status";
 
 const Post = ({
   title,
   url,
   id,
   karma,
-  profiles: { id: userId, username },
+  profiles: { username },
   updateKarma,
-  upvoted,
   hideUpvotes,
+  userVoteValue,
+  votes,
   ...detail
 }: PostProps) => {
-  const { user } = useUser();
-
-  const isUsers = useMemo(() => user && user.id === userId, [user, userId]);
-
-  const handleUpvoteClick = () => {
-    if (upvoted) {
-      return;
-    }
-
-    updateKarma(id);
-  };
+  const status = resolveStatus(userVoteValue);
+  const upvoted = status === "upvoted";
 
   return (
     <div className="w-full flex">
@@ -37,16 +27,7 @@ const Post = ({
           { "pl-0 w-10": hideUpvotes }
         )}
       >
-        <SecondaryButton
-          handleClick={handleUpvoteClick}
-          className={classNames({
-            "pointer-events-none text-tertiary": upvoted,
-          })}
-        >
-          <FaArrowUp className="mb-1" />
-        </SecondaryButton>
-
-        <p className="text-sm font-medium text-tertiary">{karma}</p>
+        <PostVoteButtons id={id} userVoteValue={userVoteValue} votes={votes} />
       </div>
       <div className="md:px-5 lg:border-l">
         {url && (
@@ -70,19 +51,21 @@ const Post = ({
           id={id}
           url={url}
           username={username}
-          karma={karma}
           upvoted={upvoted}
+          votes={votes}
         />
       </div>
     </div>
   );
 };
 
-type PostProps = Post & {
+interface PostProps extends Post {
   hideComments?: boolean;
   updateKarma?: (postId: string) => void;
-  upvoted: boolean;
-  hideUpvotes: boolean;
-};
+  hideUpvotes?: boolean;
+  userVoteValue: number;
+  votes: number;
+  commentsCount: number;
+}
 
 export default Post;

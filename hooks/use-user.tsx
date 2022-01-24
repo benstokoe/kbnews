@@ -6,7 +6,7 @@ import { supabase } from "utils/supabaseClient";
 interface AuthSessionProps {
   user: User | null;
   session: Session | null;
-  profile?: null;
+  profile?: Profile;
   loading: boolean;
   refresh: any;
 }

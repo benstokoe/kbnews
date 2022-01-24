@@ -57,17 +57,17 @@ export const SecondaryButton = ({
 
 type ButtonType = "button" | "submit" | "reset";
 
-type PrimaryButtonProps = {
+interface PrimaryButtonProps {
   handleClick?: () => void;
   children: ReactNode;
   type?: ButtonType;
   disabled?: boolean;
   isLoading?: boolean;
-};
+}
 
-type SecondaryButtonProps = {
+interface SecondaryButtonProps {
   handleClick?: () => void;
   children: ReactNode;
   type?: ButtonType;
   className?: string;
-};
+}

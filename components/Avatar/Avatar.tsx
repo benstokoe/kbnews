@@ -2,7 +2,7 @@ import React from "react";
 import cn from "classnames";
 
 interface Props {
-  // profile?: definitions["profiles"] | null;
+  profile?: Profile;
   className?: string | { [key: string]: any };
   isDeleted?: boolean;
   firstLetter?: string;

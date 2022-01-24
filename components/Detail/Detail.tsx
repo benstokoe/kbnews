@@ -2,7 +2,7 @@ import { formatDistanceToNow } from "date-fns";
 import Link from "next/link";
 import { BiMessageDetail } from "react-icons/bi";
 import { FiThumbsUp } from "react-icons/fi";
-import { SecondaryButton } from "components/Button/Button";
+import cn from "classnames";
 
 const domain_from_url = (url: string): string => {
   if (!url) {
@@ -19,65 +19,51 @@ const domain_from_url = (url: string): string => {
 const Detail = ({
   id,
   url,
-  karma,
   username,
   inserted_at,
-  hideUpvote,
   hideComments,
-  updateKarma,
   upvoted,
-}: DetailProps) => {
-  const handleUpvoteClick = () => {
-    if (upvoted) {
-      return;
-    }
+  commentsCount,
+  votes,
+}: DetailProps) => (
+  <div className="flex mt-2 text-primary opacity-75">
+    <p className="hidden lg:inline-block text-xs mr-4">
+      by <span className="font-medium">{username}</span>
+    </p>
+    <p className="text-xs mr-4">
+      {formatDistanceToNow(new Date(inserted_at), { addSuffix: true })}
+    </p>
+    <p className="text-xs hidden lg:inline-block mr-4">
+      {domain_from_url(url)}
+    </p>
+    {!hideComments && (
+      <Link href={`/post/${id}`}>
+        <a className="flex items-start mr-4">
+          <BiMessageDetail className="mr-1" />
+          <figcaption className="text-xs">{commentsCount} Comments</figcaption>
+        </a>
+      </Link>
+    )}
 
-    updateKarma(id);
-  };
-
-  return (
-    <div className="flex mt-2 text-primary opacity-75">
-      <p className="hidden lg:inline-block text-xs mr-4">
-        by <span className="font-medium">{username}</span>
-      </p>
-      <p className="text-xs mr-4">
-        {formatDistanceToNow(new Date(inserted_at), { addSuffix: true })}
-      </p>
-      <p className="text-xs hidden lg:inline-block mr-4">
-        {domain_from_url(url)}
-      </p>
-      {!hideComments && (
-        <Link href={`/post/${id}`}>
-          <a className="flex items-start mr-4">
-            <BiMessageDetail className="mr-1" />
-            <figcaption className="text-xs">Comments</figcaption>
-          </a>
-        </Link>
-      )}
-
-      <SecondaryButton
-        handleClick={handleUpvoteClick}
-        className={upvoted && "pointer-events-none text-tertiary"}
-      >
-        <div className="lg:hidden flex items-start">
-          <FiThumbsUp className="mr-1" />
-          <p className="text-xs">{karma}</p>
-        </div>
-      </SecondaryButton>
+    <div
+      className={cn("lg:hidden flex items-start", { "text-tertiary": upvoted })}
+    >
+      <FiThumbsUp className="mr-1" />
+      <p className="text-xs">{votes}</p>
     </div>
-  );
-};
+  </div>
+);
 
-type DetailProps = {
-  id?: string;
+interface DetailProps {
+  id?: number;
   url: string;
   username: string;
-  karma: number;
   inserted_at: string;
   hideUpvote?: boolean;
   hideComments?: boolean;
-  updateKarma?: (postId: string) => void;
   upvoted: boolean;
-};
+  commentsCount: number;
+  votes: number;
+}
 
 export default Detail;

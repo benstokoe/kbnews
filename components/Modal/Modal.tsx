@@ -56,11 +56,11 @@ const CustomModal = ({
   </Transition.Root>
 );
 
-type CustomModalProps = {
+interface CustomModalProps {
   showing: boolean;
   toggle: () => void;
   title: string;
   children: ReactNode;
-};
+}
 
 export default CustomModal;

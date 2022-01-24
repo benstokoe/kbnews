@@ -1,4 +1,4 @@
-type CommentType {
+interface CommentType {
   id: number;
   slug: string;
   title: string;
@@ -8,7 +8,7 @@ type CommentType {
   createdAt: string;
   isPublished: boolean;
   updatedAt: string;
-  author: definitions['profiles'];
+  author: definitions["profiles"];
   isPinned: boolean;
   responsesCount: number;
   responses: CommentType[];

@@ -1,17 +1,20 @@
-import Posts from "components/Posts/Posts";
 import type { NextPage } from "next";
 import Head from "next/head";
+import { PostsContextProvider } from "hooks/use-posts";
+import Posts from "containers/PostsContainer";
 
-const Home: NextPage = () => {
-  return (
-    <div>
-      <Head>
-        <title>KbNews.</title>
-      </Head>
+export const perPage = 20;
 
+const Home: NextPage = () => (
+  <>
+    <Head>
+      <title>KbNews.</title>
+    </Head>
+
+    <PostsContextProvider perPage={perPage}>
       <Posts />
-    </div>
-  );
-};
+    </PostsContextProvider>
+  </>
+);
 
 export default Home;

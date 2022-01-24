@@ -34,7 +34,7 @@ const Input = ({
   </>
 );
 
-type InputProps = {
+interface InputProps {
   label: string;
   required: boolean;
   name: string;
@@ -45,5 +45,5 @@ type InputProps = {
   onChange?: (event: any) => void;
   className?: string;
   error: string;
-};
+}
 export default Input;
