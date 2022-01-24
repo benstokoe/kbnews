@@ -5,16 +5,17 @@ import { supabase } from "utils/supabaseClient";
 import React from "react";
 import VoteButtons from "./VoteButtons";
 import resolveStatus from "utils/resolve-vote-status";
+import { usePosts } from "hooks/use-posts";
 
 export const invokeVote = async (
-  postId: number,
+  submissionId: number,
   userId: string,
   value: number
 ): Promise<any> =>
   supabase
-    .from("votes")
-    .upsert([{ postId, userId, value }], {
-      onConflict: "postId, userId",
+    .from("user_submissions_votes")
+    .upsert([{ submissionId, userId, value }], {
+      onConflict: "submissionId, userId",
     })
     .then(({ data, error }) => {
       if (error) {
@@ -25,26 +26,26 @@ export const invokeVote = async (
       return data;
     });
 
-export const mutateVotes = (
+export const mutatePosts = (
   mutate: any,
-  postId: number,
+  submissionId: number,
   incrementBy: number,
   userVoteValue: number
 ): Promise<any> =>
   mutate(
-    (pages: CommentType[][]) =>
-      pages.map((comments) =>
-        comments.map((comment) => {
-          if (comment.id === postId) {
-            const newComment = {
-              ...comment,
-              votes: comment.votes + incrementBy,
+    (pages: Post[][]) =>
+      pages.map((posts) =>
+        posts.map((post) => {
+          if (post.id === submissionId) {
+            const newPost = {
+              ...post,
+              votes: post.votes + incrementBy,
               userVoteValue,
             };
 
-            return newComment;
+            return newPost;
           }
-          return comment;
+          return post;
         })
       ),
     false
@@ -67,7 +68,7 @@ const PostVoteButtons = ({
   config = { type: "thumbs", canDownvote: true },
 }: Props) => {
   const { user } = useUser();
-  const { mutateComments } = useComments();
+  const { mutatePosts } = usePosts();
   const status = resolveStatus(userVoteValue);
   // const { open } = useModal();
 
@@ -76,13 +77,13 @@ const PostVoteButtons = ({
 
     if (status === "unvoted") {
       invokeVote(id, user.id, 1);
-      mutateVotes(mutateComments, id, 1, 1);
+      mutatePosts(mutatePosts, id, 1, 1);
     } else if (status === "upvoted") {
       invokeVote(id, user.id, 0);
-      mutateVotes(mutateComments, id, -1, 0);
+      mutatePosts(mutatePosts, id, -1, 0);
     } else if (status === "downvoted") {
       invokeVote(id, user.id, 1);
-      mutateVotes(mutateComments, id, 2, 1);
+      mutatePosts(mutatePosts, id, 2, 1);
     }
   };
 
@@ -91,13 +92,13 @@ const PostVoteButtons = ({
 
     if (status === "unvoted") {
       invokeVote(id, user.id, -1);
-      mutateVotes(mutateComments, id, -1, -1);
+      mutatePosts(mutatePosts, id, -1, -1);
     } else if (status === "upvoted") {
       invokeVote(id, user.id, -1);
-      mutateVotes(mutateComments, id, -2, -1);
+      mutatePosts(mutatePosts, id, -2, -1);
     } else if (status === "downvoted") {
       invokeVote(id, user.id, 0);
-      mutateVotes(mutateComments, id, 1, 0);
+      mutatePosts(mutatePosts, id, 1, 0);
     }
   };
 

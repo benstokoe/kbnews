@@ -18,13 +18,13 @@ interface PostsContextInterface {
   currentPage: number;
   remainingCount: number | null;
   error: any;
-  commentsError: any;
+  postsError: any;
   isLoadingInitialData: boolean;
   isLoadingMore: boolean;
   isEmpty: boolean;
   isReachingEnd: boolean | undefined;
   loadMore: () => void;
-  mutateComments: any;
+  mutatePosts: any;
   mutateGlobalCount: any;
   sortingBehavior: SortingBehavior;
   setSortingBehavior: (behavior: SortingBehavior) => void;
@@ -40,7 +40,7 @@ const PostsContext = createContext<PostsContextInterface>({
   currentPage: null,
   remainingCount: null,
   error: null,
-  commentsError: null,
+  postsError: null,
   isLoadingInitialData: false,
   isLoadingMore: false,
   isEmpty: true,
@@ -48,7 +48,7 @@ const PostsContext = createContext<PostsContextInterface>({
   loadMore: () => {
     return;
   },
-  mutateComments: null,
+  mutatePosts: null,
   mutateGlobalCount: null,
   sortingBehavior: "pathVotesRecent",
   setSortingBehavior: () => {
@@ -76,7 +76,7 @@ export const PostsContextProvider = (
   const {
     data: count,
     mutate: mutateGlobalCount,
-    error: commentsError,
+    error: postsError,
   } = useSWR<number | null, any>(`globalCount_posts`, {
     fetcher: () => null,
     revalidateOnFocus: false,
@@ -99,7 +99,7 @@ export const PostsContextProvider = (
     error,
     size,
     setSize,
-    mutate: mutateComments,
+    mutate: mutatePosts,
   } = useSWRInfinite(
     (pageIndex, previousPageData) =>
       getKey(pageIndex, previousPageData, sortingBehavior, user), // Include user to revalidate when auth changes
@@ -134,7 +134,7 @@ export const PostsContextProvider = (
     },
     {
       revalidateOnFocus: false,
-      // revalidateOnMount: !cache.has(['comments_thread_with_user_vote', postgresArray([postId])]),
+      // revalidateOnMount: !cache.has(['posts_with_count', postgresArray([postId])]),
     }
   );
 
@@ -157,7 +157,7 @@ export const PostsContextProvider = (
   const value = {
     user,
     posts,
-    commentsError,
+    postsError,
     count,
     currentPage: size,
     remainingCount,
@@ -167,7 +167,7 @@ export const PostsContextProvider = (
     isEmpty,
     isReachingEnd,
     loadMore,
-    mutateComments,
+    mutatePosts,
     mutateGlobalCount,
     sortingBehavior,
     setSortingBehavior,
@@ -182,7 +182,7 @@ export const usePosts = (): PostsContextInterface => {
   const context = useContext(PostsContext);
 
   if (context === undefined) {
-    throw new Error(`useComments must be used within a PostsContextProvider.`);
+    throw new Error(`usePosts must be used within a PostsContextProvider.`);
   }
 
   return context;
